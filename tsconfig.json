@@ -1,0 +1,45 @@
+{
+    "compileOnSave": true, // only works when tsc.cmd is executing in watch mode `node_modules\.bin\tsc.cmd --watch -p "c:\code\botnode\tsconfig.json"`
+    "compilerOptions": {
+      "target": "es2017",
+      "module": "commonjs",
+      "strict": true,
+      "isolatedModules": false,
+      "jsx": "react",
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true,
+      "declaration": false,
+      "noImplicitAny": false,
+      "removeComments": true,
+      "noLib": false,
+      "lib": [
+        "es2015",
+        "es2016",
+        "es2017",
+        "esnext.asynciterable"
+      ],
+      "preserveConstEnums": true,
+      "suppressImplicitAnyIndexErrors": true,
+      "outDir": "built",
+      "alwaysStrict": true,
+      "typeRoots": [ // not needed if "node_modules/@types" is the only place types are stored, as that location is in defaults
+        "node_modules/@types"
+      ],
+      "strictNullChecks": true,
+      "allowJs": true,
+      "checkJs": true,
+      "sourceMap": true,
+      "watch": true
+    },
+    "include": [
+      "src/**/*",
+      "./*.ts"
+    ],
+    "exclude": [
+      "built",
+      "*.js",
+      "node_modules",
+      "**/*.spec.ts"
+    ]
+  }
+  
