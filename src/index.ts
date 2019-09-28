@@ -1,6 +1,8 @@
 
 // testing duck typing.
 
+
+// using index signature
 interface SimpleObject {
     [prop: string]: any;
 }
@@ -22,9 +24,18 @@ const duckLike1 = {
 }
 const duckLike2: SimpleObject = {
     name: 'daisy',
-    // quack: () => { console.log('i am scrooge. quack!'); },
+    // quack: () => { console.log('i am daisy. quack!'); },
     rich: false,
 }
+const duckLike3: SimpleObject = {
+    quack: () => { console.log('i am huey. quack!'); },
+    rich: false,
+}
+const duckLike4 = {
+    quack: () => { console.log('i am louise. quack!'); },
+    rich: false,
+}
+
 duckLike1.newProp = "I am a new prop";
 // error since type was implicitly set to the original object
 
@@ -50,6 +61,26 @@ makeDuckQuack(duckLike1);
 // makeDuckQuack
 makeDuckQuack(duckLike2);
 
+// error! so when passing an argument into a function, TS explicitly statically
+// checked whether SimpleObject has all the required props
+// TS did not care that I had set name and quack on duckLike2 before calling
+// makeDuckQuack
+makeDuckQuack(duckLike3);
+
+//  ideally, since I am not using the name property in makeDuckQuack,
+//  i should have only specified the required properties in the parameter type
+// e.g. 
+function makeDuckQuackImproved(duck: { quack: () => void }) {
+    duck.quack();
+}
+makeDuckQuackImproved(duckLike3);
+// this still does not pass muster, because TS is not dynamically checking
+//  whether my duckLike3 object has the quack method, which it does
+//  TS just checks that duckLike3 is a SimpleObject which does not guarantee
+//  that it will have a quack method and hence shows an error
+
+// let's try again
+makeDuckQuackImproved(duckLike4);
 
 // forcing type coercion, i am past the error duing TS check/compilation
 //  but this will lead to run-time error
